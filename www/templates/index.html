@@ -1,0 +1,87 @@
+{% extends "base.html" %}
+
+{% block title %}
+首页展示
+{% endblock title %}
+
+{% block CSS %}
+    <style>
+
+    </style>
+{% endblock CSS %}
+{% block main %}
+    <h4><p>2015-2018年全国创新驱动子指数分别为100.5、102.8、102.8	、105，江苏、浙江、山东、北京、上海、四川、湖北创新驱动发展高于全国水平，但新疆、西藏也在2016至2018年创新驱动的发展获得了明显的进步。</p></h4>
+     <div id="bar" style="width:100%; height:600px;"></div>
+    <br>
+    <br>
+    <h4><p style="color: white">2015至2018年，全国高效增长指数分别为92.18、108.01、110.03、139.03。从2015-2018年全国各省份高效增长质效来看，江苏、山东、浙江、上海、福建、河北这些省份的经济质效普遍高于全国其他省份的水平。</p></h4>
+    <div id="bar2" style="width:100%; height:600px;"></div>
+    <br>
+    <br>
+    <h4><p>2015至2018年，全国区域协调子指数分别为95.17、96.94	、96.64、101.17，西藏、北京、上海、简述、天津、湖北、浙江等省份的区域协调发展高于全国水平。</p></h4>
+    <div id="bar3" style="width:100%; height:600px;"></div>
+    <br>
+    <br>
+    <h4><p>2015至2018年，北京、上海、重庆、湖南、吉林、福建、江苏、浙江等省份结构优化始终高于全国水平。宁夏、河北、辽宁、陕西、黑龙江、甘肃始终位于低于全国水平。</p></h4>
+    <div id="bar4" style="width:100%; height:600px;"></div>
+
+
+    <script src="static/assets/js/jquery.min.js"></script>
+    <script src="static/assets/js/echarts.min.js"></script>
+    <script src="static/assets/js/echarts-bg/halloween.js"></script>
+    <script src="static/assets/js/echarts-bg/purple.js"></script>
+
+
+    <script type="text/javascript">
+        var chart = echarts.init(document.getElementById('bar'),'halloween');
+        var chart2 = echarts.init(document.getElementById('bar2'),'purple');
+        var chart3 = echarts.init(document.getElementById('bar3'),'halloween');
+        var chart4 = echarts.init(document.getElementById('bar4'),'purple');
+        function foo() {
+            $.ajax({
+                type: "GET",
+                url: "{{ url_for('home_page.get_bar_chart1') }}",
+                dataType: 'json',
+                success: function (result) {
+                    chart.setOption(result);
+
+                }
+            });
+
+            $.ajax({
+                type: "GET",
+                url: "{{ url_for('home_page.hight_increase') }}",
+                dataType: 'json',
+                success: function (result) {
+
+                    chart2.setOption(result);
+                }
+            });
+
+            $.ajax({
+                type: "GET",
+                url: "{{ url_for('home_page.get_region_data') }}",
+                dataType: 'json',
+                success: function (result) {
+
+                    chart3.setOption(result);
+                }
+            });
+
+            $.ajax({
+                type: "GET",
+                url: "{{ url_for('home_page.get_struct_optmize') }}",
+                dataType: 'json',
+                success: function (result) {
+
+                    chart4.setOption(result);
+                }
+            });
+        }
+
+        foo();
+
+    </script>
+
+
+{% endblock main %}
